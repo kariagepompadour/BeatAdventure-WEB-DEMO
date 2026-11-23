@@ -1695,7 +1695,13 @@ function drawFrame(now) {
   if (S.fade > 0) { g.fillStyle = `rgba(0,0,0,${Math.min(1, S.fade)})`; g.fillRect(0, 0, W, H); }
   if (S.map) drawMap(now);
   if (!M.sounding) { g.fillStyle = "#fff"; g.font = "8px monospace"; g.fillText("BEAT ADVENTURE", 70, 60); g.fillStyle = "#aaa"; g.fillText("play music (Test song / MIC / TAB AUDIO)", 24, 76); }
-  // No status line on the screen, as in KeySpeaker: the stage name, the day and the tempo are not drawn (the level dots below stay).
+  // No status line on the screen, as in KeySpeaker: nothing is written while it plays. The d key (or the Numbers button) shows the same numbers as the Cardputer build: stage, day and tempo, and PULSE (green: the tracker holds a clear pulse) or onset (amber).
+  if (showDiag) {
+    const stage = S.under ? "WATERWAY" : S.scene === "climb" ? "LINER" : S.scene === "jungle" ? (S.tarzan ? "VINES" : S.land === "open" ? "BEACH" : S.landN === 2 ? "FOREST 2" : "FOREST") : S.scene === "cavern" ? "TREASURY" : S.scene === "cave" ? (S.lab ? "TUNNEL" : "CAVE") : S.scene === "boatfall" ? "BOAT+FALLS" : S.scene.toUpperCase();
+    const label = (t, x, y, c) => { g.font = "7px monospace"; g.fillStyle = "#000"; g.fillText(t, x + 1, y + 1); g.fillStyle = c; g.fillText(t, x, y); };
+    label(stage + "  DAY " + S.day + "  " + Math.round(60 / M.T) + " bpm", 4, 127, "#fff");
+    if (M.sounding) label(bt.locked ? "PULSE" : "onset", 180, 117, bt.locked ? "#4cd964" : "#ffb020");
+  }
   for (let i = 0; i < 6; i++) R(W - 10 - i * 5, 125, 3, 3, M.pulse > 0.5 && i === 0 ? C.gold : (M.level * 6 > i ? C.grass : rgb(40, 50, 40)));
 }
 
@@ -1773,7 +1779,11 @@ $("bScene").onclick = () => previewStage(previewOrder[(previewIndex + 1) % previ
 $("bDusk").onclick = () => { S.tired = 0.75; };
 $("bCol").onclick = () => { S.col = { t: 0 }; };
 $("bHole").onclick = () => { previewStage("forest"); S.rel.push({ wx: S.scroll + 120, taken: false, entrance: true, shift: 0 }); S.nextRelic = Infinity; };
+let showDiag = false;
+function toggleDiag() { showDiag = !showDiag; const b = $("bDiag"); if (b) b.setAttribute("aria-pressed", String(showDiag)); }
+$("bDiag").onclick = toggleDiag;
 addEventListener("keydown", e => {
+  if (e.code === "KeyD" && !e.ctrlKey && !e.metaKey && !e.altKey && !e.repeat) { toggleDiag(); return; }   // the numbers on or off, as with the d key on the Cardputer
   if (paused) return;
   const now = gameTime();
   if (["Space", "ArrowUp", "ArrowDown"].includes(e.code)) e.preventDefault(); else return;
