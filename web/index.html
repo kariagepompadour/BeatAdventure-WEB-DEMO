@@ -1,0 +1,98 @@
+<!doctype html>
+<!-- Copyright (c) 2026 Kariage POMPADOUR Entertainment Corporation. MIT License. -->
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101114">
+  <meta name="description" content="BeatAdventure WEB DEMO: a music-powered pixel adventure on the 240×135 Cardputer ADV screen. 音に反応する冒険ゲームのブラウザデモ。">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>BeatAdventure WEB DEMO</title>
+</head>
+<body>
+<aside class="poster-side" aria-label="BeatAdventure poster">
+  <a class="gimg" lang="en" href="assets/poster-en.svg" target="_blank" rel="noopener"><img src="assets/poster-en.svg" width="1024" height="1536" alt="BeatAdventure adventure poster"></a>
+  <a class="gimg" lang="ja" href="assets/poster-ja.svg" target="_blank" rel="noopener"><img src="assets/poster-ja.svg" width="1024" height="1536" alt="BeatAdventure イメージポスター"></a>
+</aside>
+<main class="page">
+  <section class="poster-top" aria-label="BeatAdventure poster">
+    <a class="gimg" lang="en" href="assets/poster-en.svg" target="_blank" rel="noopener"><img src="assets/poster-en.svg" width="1024" height="1536" alt="BeatAdventure adventure poster"></a>
+    <a class="gimg" lang="ja" href="assets/poster-ja.svg" target="_blank" rel="noopener"><img src="assets/poster-ja.svg" width="1024" height="1536" alt="BeatAdventure イメージポスター"></a>
+  </section>
+  <header class="top">
+    <div><p class="series">KEYSPEAKER SERIES · CARDPUTER ADV</p><h1>BeatAdventure <small>WEB DEMO</small></h1></div>
+    <div class="langs" aria-label="Language"><button type="button" data-setlang="en">English</button><button type="button" data-setlang="ja">日本語</button></div>
+  </header>
+  <p class="lead"><span lang="en">A pixel adventure shaped by the music you play. Volume builds the landscape and equalizers become waves, leaves and fire on the Cardputer ADV's 240×135 screen.</span><span lang="ja">再生中の音楽が地形をつくるピクセル冒険活劇。音量の山やグライコが波、木の葉、炎に変わる Cardputer ADV の240×135画面をブラウザで楽しめます。</span></p>
+
+  <div class="quick" aria-label="Audio and display controls">
+    <button class="power" id="bShare" type="button" aria-pressed="false"><span class="power-light" aria-hidden="true"></span><b>START</b></button>
+    <button class="power" id="bMic" type="button" aria-pressed="false"><span class="power-light" aria-hidden="true"></span><b>MIC START</b></button>
+    <button class="btn" id="bTest" type="button" aria-pressed="false">♪ <span lang="en">Test song</span><span lang="ja">テスト曲</span></button>
+    <button class="btn" id="bFull" type="button">⛶ <span lang="en">Full screen</span><span lang="ja">全画面</span></button>
+    <p id="msg" role="status" aria-live="polite"><span lang="en">Choose a sound source to sync the adventure.</span><span lang="ja">音源を選ぶと冒険が音に反応します。</span></p>
+  </div>
+
+  <section class="device" id="gameView" aria-label="BeatAdventure screen">
+    <div class="bezel"><canvas id="lcd" width="240" height="135" aria-label="Cardputer ADV adventure screen"></canvas></div>
+    <div class="brand"><span>BeatAdventure</span><span>Cardputer ADV · 240 × 135</span></div>
+  </section>
+
+  <section class="control-panel" aria-labelledby="audio-heading">
+    <h2 id="audio-heading">AUDIO</h2>
+    <p><span lang="en"><b>START</b> captures sound from a tab: select the tab that plays music and check “Share audio”. <b>MIC START</b> uses the microphone. Test song works without either. The audio is analysed in your browser and is not uploaded.</span><span lang="ja"><b>START</b> で音楽を再生しているタブを選び、「音声を共有」にチェックしてください。<b>MIC START</b> はマイク、<b>テスト曲</b>は共有なしで試せます。音はブラウザ内で解析し、送信しません。</span></p>
+    <div class="panel-actions"><button class="btn" id="bDisconnect" type="button"><span lang="en">Disconnect audio</span><span lang="ja">音声の接続を解除</span></button><button class="btn" id="bStop" type="button" aria-pressed="false">Stop screen</button></div>
+    <p class="hint"><span lang="en">Stop screen freezes the picture and story. Disconnect audio only releases the sound source.</span><span lang="ja">「画面を停止」は映像と物語を止めます。「音声の接続を解除」は音源だけを切り離します。</span></p>
+    <p id="dbg" class="debug">no sound yet</p>
+  </section>
+
+  <section class="control-panel" aria-labelledby="stages-heading">
+    <h2 id="stages-heading"><span lang="en">TRY A STAGE</span><span lang="ja">ステージを試す</span></h2>
+    <p><span lang="en">Jump to any chapter. The story normally moves between scenes on its own.</span><span lang="ja">どの章からでも試せます。通常の冒険では物語に沿って自動で次のシーンへ進みます。</span></p>
+    <div class="stage-grid">
+      <button id="bClimb" type="button"><span lang="en">Disembark</span><span lang="ja">客船から下船</span></button>
+      <button id="bBeach" type="button"><span lang="en">Beach</span><span lang="ja">浜辺</span></button>
+      <button id="bForest2" type="button"><span lang="en">Forest 2</span><span lang="ja">起伏のある森</span></button>
+      <button id="bWall" type="button"><span lang="en">Wall</span><span lang="ja">崩れた崖</span></button>
+      <button id="bVines" type="button"><span lang="en">Vine ravine</span><span lang="ja">ツタの峡谷</span></button>
+      <button id="bBoatfall" type="button"><span lang="en">Boat &amp; falls</span><span lang="ja">小舟と滝</span></button>
+      <button id="bRiver" type="button"><span lang="en">River</span><span lang="ja">川</span></button>
+      <button id="bForest" type="button"><span lang="en">Forest</span><span lang="ja">森</span></button>
+      <button id="bTunnel" type="button"><span lang="en">Tunnel</span><span lang="ja">トンネル</span></button>
+      <button id="bCav" type="button"><span lang="en">Treasury</span><span lang="ja">宝倉庫</span></button>
+      <button id="bWaterway" type="button"><span lang="en">Waterway</span><span lang="ja">地下水路</span></button>
+      <button id="bFountain" type="button"><span lang="en">Water jet</span><span lang="ja">噴き上げる水</span></button>
+      <button id="bSkyfall" type="button"><span lang="en">Sky fall</span><span lang="ja">空から落下</span></button>
+      <button id="bPyramid" type="button"><span lang="en">Pyramid</span><span lang="ja">ピラミッド</span></button>
+      <button id="bCamp" type="button"><span lang="en">Camp</span><span lang="ja">キャンプ</span></button>
+    </div>
+  </section>
+
+  <section class="control-panel" aria-labelledby="shortcuts-heading">
+    <h2 id="shortcuts-heading"><span lang="en">STORY SHORTCUTS</span><span lang="ja">物語のショートカット</span></h2>
+    <div class="panel-actions"><button class="btn" id="bScene" type="button"><span lang="en">Next scene</span><span lang="ja">次のシーン</span></button><button class="btn" id="bDusk" type="button"><span lang="en">Dusk</span><span lang="ja">夕暮れ</span></button><button class="btn" id="bCol" type="button"><span lang="en">Exhaust</span><span lang="ja">力尽きる</span></button><button class="btn" id="bHole" type="button"><span lang="en">Mask + hole</span><span lang="ja">仮面と穴</span></button></div>
+  </section>
+
+  <section class="control-panel" aria-labelledby="guide-heading">
+    <h2 id="guide-heading"><span lang="en">KEY GUIDE</span><span lang="ja">操作ガイド</span></h2>
+    <div class="key-grid"><div><kbd>Space / ↑</kbd><span lang="en">Jump or swim up</span><span lang="ja">ジャンプ・上へ泳ぐ</span></div><div><kbd>↓</kbd><span lang="en">Swim down</span><span lang="ja">下へ泳ぐ</span></div></div>
+    <p class="hint"><span lang="en">The explorer moves on his own. Press a key to take control for four seconds. After a minute without sound, he rests at Camp until the music returns, then resumes where he left off.</span><span lang="ja">主人公は自動で進みます。キーを押すと4秒間操作できます。音が1分以上止まるとキャンプで休み、音楽が戻れば元の場所から再開します。</span></p>
+  </section>
+  <section class="control-panel guide-bottom" aria-label="Adventure instruction card">
+    <h2><span lang="en">ADVENTURE FIELD GUIDE</span><span lang="ja">冒険のインストラクションカード</span></h2>
+    <p><span lang="en">The journey, sound controls and keys at a glance. Tap the card to open it full size.</span><span lang="ja">旅の場面と音源・キー操作を一枚にまとめました。押すと大きく見られます。</span></p>
+    <a class="gimg" lang="en" href="assets/field-guide-en.svg" target="_blank" rel="noopener"><img src="assets/field-guide-en.svg" width="832" height="2000" alt="BeatAdventure adventure instruction card" loading="lazy"></a>
+    <a class="gimg" lang="ja" href="assets/field-guide-ja.svg" target="_blank" rel="noopener"><img src="assets/field-guide-ja.svg" width="832" height="2000" alt="BeatAdventure 冒険のインストラクションカード" loading="lazy"></a>
+  </section>
+  <footer><span lang="en">Part of the <a href="https://github.com/kariagepompadour/KeySpeaker-WEB-DEMO" target="_blank" rel="noopener">KeySpeaker WEB DEMO</a> series.</span><span lang="ja"><a href="https://github.com/kariagepompadour/KeySpeaker-WEB-DEMO" target="_blank" rel="noopener">KeySpeaker WEB DEMO</a> と同じシリーズの作品です。</span></footer>
+</main>
+<aside class="side" aria-label="Adventure instruction card">
+  <a class="gimg" lang="en" href="assets/field-guide-en.svg" target="_blank" rel="noopener"><img src="assets/field-guide-en.svg" width="832" height="2000" alt="BeatAdventure adventure instruction card"></a>
+  <a class="gimg" lang="ja" href="assets/field-guide-ja.svg" target="_blank" rel="noopener"><img src="assets/field-guide-ja.svg" width="832" height="2000" alt="BeatAdventure 冒険のインストラクションカード"></a>
+</aside>
+<script src="ui.js"></script>
+<script src="beat.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

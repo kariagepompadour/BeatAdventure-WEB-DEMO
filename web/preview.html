@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BeatAdventure prototype</title>
+<style>
+  :root { --bg:#101114; --fg:#e8e8ea; --dim:#8a8a90; --accent:#f2b84b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui,sans-serif; display:flex; flex-direction:column; align-items:center; padding:16px; gap:12px; }
+  h1 { font-size:18px; margin:4px 0 0; } h1 small { color:var(--dim); font-weight:normal; }
+  .bezel { background:#000; padding:10px; border-radius:10px; border:2px solid #2a2b30; }
+  canvas { display:block; width:min(92vw,720px); aspect-ratio:240/135; image-rendering:pixelated; }
+  .row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+  button { background:#22242a; color:var(--fg); border:1px solid #3a3c44; border-radius:8px; padding:8px 14px; font:inherit; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  p { max-width:720px; color:var(--dim); margin:0; text-align:center; font-size:13px; }
+  #dbg { font:12px ui-monospace,Menlo,monospace; }
+  kbd { background:#22242a; border:1px solid #3a3c44; border-radius:4px; padding:0 5px; color:var(--accent); }
+</style>
+</head>
+<body>
+<h1>BeatAdventure <small>web prototype</small></h1>
+<div class="bezel"><canvas id="lcd" width="240" height="135"></canvas></div>
+<div class="row">
+  <button id="bTest">♪ Test song</button>
+  <button id="bMic">MIC START</button>
+  <button id="bShare">TAB AUDIO</button>
+  <button id="bScene">Next scene</button>
+  <button id="bDusk">Dusk</button>
+  <button id="bCol">Exhaust</button>
+  <button id="bHole">Hole</button>
+  <button id="bCav">Cavern</button>
+  <button id="bBeach">Beach</button>
+  <button id="bStop">Stop</button>
+</div>
+<p id="dbg">no sound yet</p>
+<p><kbd>Space</kbd> / <kbd>↑</kbd> jump or swim up, <kbd>↓</kbd> swim down. The hero plays by itself; touch a key and you drive for 4 seconds.</p>
+<script src="beat.js"></script>
+<script src="game.js"></script>
+<script>
+const previewScene = new URLSearchParams(location.search).get('scene');
+function previewFrame() {
+  S.scene = previewScene === 'river' ? 'river' : 'cave';
+  S.under = previewScene === 'river';
+  S.lab = previewScene === 'river' ? null : { depth: 0, stage: 0, kinds: ['down', 'up', 'gate'], wx: 560, pw: -100, mv: null, ld: 1, view: 'side' };
+  S.obs = []; S.bubbles = []; S.drops = []; S.drips = []; S.splash = []; S.map = null; S.fade = 0;
+  S.scroll = 0; S.cv = 55; S.laneY = 84; S.visualDark = 0;
+  M.sounding = true; M.level = 0.8; M.eqH.fill(6); M.pk.fill(7);
+  drawFrame(performance.now() / 1000);
+  requestAnimationFrame(previewFrame);
+}
+requestAnimationFrame(previewFrame);
+</script>
+</body>
+</html>
