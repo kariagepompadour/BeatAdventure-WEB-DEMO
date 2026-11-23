@@ -4,6 +4,8 @@ A music-synced adventure demo for the M5Stack Cardputer ADV (240 x 135). A compa
 (the sound's level and beats drive the screen, an autopilot plays) with an adventure-run look: a jungle runner, vine swings, river
 swims, balloon flights, pirate ships.
 
+**Live demo / ブラウザで遊ぶ: https://kariagepompadour.github.io/BeatAdventure-WEB-DEMO/**
+
 [日本語](#日本語)
 
 ## Status
@@ -57,6 +59,8 @@ Cardputer ADV (240 x 135) 用の、音楽同期の冒険デモです。KeySpeake
 ポスター（1024×1536）とインストラクションカード（832×2000）は KeySpeaker WEB DEMO と同じ縦横比です。画面幅 **1280px 以上**では左にポスター、中央にゲーム、右にカードが同時に表示されます（1280px では中央列を700pxまで狭めて左右の画像を読みやすくしています）。1200〜1279px ではポスターのみ左に、カードはゲームの下に、スマートフォンではポスターが上、カードが下に並びます。
 
 関連ツール: [KeySpeaker WEB DEMO](https://github.com/kariagepompadour/KeySpeaker-WEB-DEMO)、[Cardputer-ADV-KeySpeaker](https://github.com/kariagepompadour/Cardputer-ADV-KeySpeaker)、[SOUND-TERRARIUM-Web](https://github.com/kariagepompadour/SOUND-TERRARIUM-Web)。ライセンスは MIT（Copyright (c) 2026 Kariage POMPADOUR Entertainment Corporation）です。ビート検出のテストは `node test/beat.test.js` で実行できます。
+
+ブラウザですぐ遊べます: https://kariagepompadour.github.io/BeatAdventure-WEB-DEMO/
 
 現在は Web 試作(`web/`)のみです。`cd web && python3 -m http.server 8765` で起動し、`http://127.0.0.1:8765/` を開いて
 **テスト曲**・**MIC START**・**START**（タブ音声）のどれかを押してください。ページ右上で日本語と英語を切り替えられます。音が止まって1分を超えるとキャンプに入り、音楽が戻ると元のシーンと位置から再開します。
