@@ -288,7 +288,7 @@ function update(now, dt) {
     if (!C.mv) {
       for (let i = 0; i < NST; i++) { const st = cavSt(i), dx = st.xs - S.scroll;
         if (st.lvl !== C.lvl || C["d" + i]) continue;
-        if (st.kind === "gap" && S.jump < 0 && dx <= 28 && dx > 0) { const short = C.lvl === NF - 1 && M.sounding && M.level < 0.55; S.jd = short ? 0.36 : M.sounding ? JD : 0.82; S.jh = short ? 20 : JH; S.jump = 0; C["d" + i] = true; }   // a slow silent run still clears an ordinary gap
+        if (st.kind === "gap" && S.jump < 0 && dx <= 28 && dx > 0) { const short = C.lvl === NF - 1 && M.sounding && M.level < 0.35; S.jd = short ? 0.36 : M.sounding ? JD : 0.82; S.jh = short ? 20 : JH; S.jump = 0; C["d" + i] = true; }   // a slow silent run still clears an ordinary gap
         else if (st.kind === "ladUp" && dx <= 0 && S.jump < 0) { S.scroll = st.xs; C.mv = { kind: "up", t: 0 }; C["d" + i] = true; }
         else if (st.kind === "rope" && dx <= 29 && S.jump < 0) { C.mv = { kind: "swing", t: 0, xs: st.xs }; C["d" + i] = true; if (S.chase) { S.chase.stuck = true; S.chase.t = Math.min(S.chase.t, 6); S.chase.wx0 = st.xs - 35; } }   // a rope over a wide gap: he grabs it and swings across, and the guardians are stuck on the near side
         else if (st.kind === "pit" && dx <= 0 && S.jump < 0) { C.mv = { kind: "drop", t: 0 }; C["d" + i] = true; } }
