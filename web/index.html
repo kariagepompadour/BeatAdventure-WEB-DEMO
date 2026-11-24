@@ -42,9 +42,11 @@
   <section class="control-panel" aria-labelledby="audio-heading">
     <h2 id="audio-heading">AUDIO</h2>
     <p><span lang="en"><b>START</b> captures sound from a tab: select the tab that plays music and check “Share audio”. <b>MIC START</b> uses the microphone. Test song works without either. The audio is analysed in your browser and is not uploaded.</span><span lang="ja"><b>START</b> で音楽を再生しているタブを選び、「音声を共有」にチェックしてください。<b>MIC START</b> はマイク、<b>テスト曲</b>は共有なしで試せます。音はブラウザ内で解析し、送信しません。</span></p>
-    <div class="panel-actions"><button class="btn" id="bDisconnect" type="button"><span lang="en">Disconnect audio</span><span lang="ja">音声の接続を解除</span></button><button class="btn" id="bStop" type="button" aria-pressed="false">Stop screen</button></div>
-    <p class="hint"><span lang="en">Stop screen freezes the picture and story. Disconnect audio only releases the sound source.</span><span lang="ja">「画面を停止」は映像と物語を止めます。「音声の接続を解除」は音源だけを切り離します。</span></p>
-    <p id="dbg" class="debug">no sound yet</p>
+    <div id="debugTools" hidden>
+      <div class="panel-actions"><button class="btn" id="bDisconnect" type="button"><span lang="en">Disconnect audio</span><span lang="ja">音声の接続を解除</span></button><button class="btn" id="bStop" type="button" aria-pressed="false">Stop screen</button></div>
+      <p class="hint"><span lang="en">Stop screen freezes the picture and story. Disconnect audio only releases the sound source.</span><span lang="ja">「画面を停止」は映像と物語を止めます。「音声の接続を解除」は音源だけを切り離します。</span></p>
+      <p id="dbg" class="debug">no sound yet</p>
+    </div>
   </section>
 
   <section class="control-panel" aria-labelledby="stages-heading">

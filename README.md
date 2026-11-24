@@ -15,7 +15,7 @@ Web prototype only (`web/`). Run it with any static server, e.g. `cd web && pyth
 
 The page includes a titled adventure poster and a bilingual instruction card (poster 1024 x 1536, card 832 x 2000, the same proportions as KeySpeaker WEB DEMO).
 Layout: at **1280 px and wider** the poster is on the left, the game in the centre and the instruction card on the right, all visible at once (the centre column narrows to 700 px at 1280 px so the side images stay readable); from 1200 to 1279 px only the poster sits beside the game and the card moves below it; on phones the poster is above the game and the card below. The four SVGs in `web/assets/` can also be opened at full size.
-**Stop screen** freezes the current frame and game time; press **Resume screen** to continue. **Disconnect audio** only releases the audio source.
+For debugging, add `?debug` to the address: it shows **Stop screen** (freezes the current frame and game time; press **Resume screen** to continue), **Disconnect audio** (only releases the audio source) and a status line.
 At the landslide, the first climbing grips stay in the original side view, then the camera cuts behind the hero for the long ascent.
 
 - Beats are detected from the low band; obstacles are placed on a beat and reach the hero a whole number of beats later,

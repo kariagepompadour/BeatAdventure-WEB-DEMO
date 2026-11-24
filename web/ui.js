@@ -19,6 +19,7 @@
     if (window.refreshAudioStatus) window.refreshAudioStatus();
   }
   for (const button of buttons) button.addEventListener("click", () => setLanguage(button.dataset.setlang));
+  if (/[?&]debug\b/.test(location.search)) { const tools = document.getElementById("debugTools"); if (tools) tools.hidden = false; }   // the stop / disconnect buttons and the status line are for debugging: shown with ?debug
   let saved;
   try { saved = localStorage.getItem("beatAdventureLang"); } catch (_) {}
   const browserJa = typeof navigator !== "undefined" && (navigator.language || "").toLowerCase().startsWith("ja");
